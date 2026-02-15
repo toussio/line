@@ -1,507 +1,185 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
-  <title>LINE RP SERVER</title>
-  <meta name="description" content="LINE RP SERVER 공식 사이트 — 소개, 규칙, 가이드, 공지/패치, 갤러리, 포털"/>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAON SERVER 사전예약</title>
+
+<style>
+:root{
+  --bg:#0b0f17;
+  --card:rgba(255,255,255,.05);
+  --line:rgba(255,255,255,.12);
+  --txt:#fff;
+  --mut:rgba(255,255,255,.65);
+  --main:#57F287;
+}
+
+*{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Pretendard","Noto Sans KR",Arial}
+body{
+  margin:0;
+  background:radial-gradient(circle at 20% 20%, rgba(87,242,135,.15), transparent 60%), var(--bg);
+  color:var(--txt);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  padding:20px;
+}
+
+.card{
+  width:100%;
+  max-width:600px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:30px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+
+h1{
+  margin:0 0 10px;
+  font-size:28px;
+}
+
+.sub{
+  color:var(--mut);
+  margin-bottom:20px;
+}
+
+.timer{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:25px;
+}
+
+.timebox{
+  flex:1;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:15px;
+  text-align:center;
+}
+
+.num{
+  font-size:26px;
+  font-weight:900;
+}
+
+.label{
+  font-size:12px;
+  color:var(--mut);
+  margin-top:4px;
+}
+
+.checkbox{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+  font-size:14px;
+}
+
+button{
+  width:100%;
+  padding:15px;
+  border-radius:14px;
+  border:none;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+  background:var(--main);
+  color:#000;
+  transition:.2s;
+}
+
+button:disabled{
+  opacity:.4;
+  cursor:not-allowed;
+}
+</style>
 </head>
-
 <body>
-  <!-- ====== Topbar ====== -->
-  <header class="topbar" id="top">
-    <div class="topbar__inner">
-      <a class="brand" href="#top" aria-label="LINE RP SERVER">
-        <span class="brand__mark" aria-hidden="true"></span>
-        <span class="brand__text">
-          <b>LINE</b><span>RP SERVER</span>
-        </span>
-      </a>
 
-      <nav class="nav" aria-label="primary navigation">
-        <a href="#about">서버소개</a>
-        <a href="#rules">규칙</a>
-        <a href="#guide">가이드</a>
-        <a href="#news">공지/패치</a>
-        <a href="#gallery">갤러리</a>
-        <a href="#portal">포털</a>
-      </nav>
-
-      <div class="topbar__actions">
-        <a class="btn btn--ghost" href="https://discord.gg/KKXA3P74yF" target="_blank" rel="noopener">
-          디스코드
-        </a>
-        <button class="btn btn--primary" id="btnConnectTop" type="button">
-          서버 접속
-        </button>
-        <button class="hamburger" id="hamburger" type="button" aria-label="메뉴 열기" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile drawer -->
-    <div class="drawer" id="drawer" aria-hidden="true">
-      <div class="drawer__panel">
-        <div class="drawer__head">
-          <div class="drawer__title">메뉴</div>
-          <button class="iconbtn" id="drawerClose" aria-label="닫기" type="button">✕</button>
-        </div>
-        <div class="drawer__links">
-          <a href="#about" class="drawerLink">서버소개</a>
-          <a href="#rules" class="drawerLink">규칙</a>
-          <a href="#guide" class="drawerLink">가이드</a>
-          <a href="#news" class="drawerLink">공지/패치</a>
-          <a href="#gallery" class="drawerLink">갤러리</a>
-          <a href="#portal" class="drawerLink">포털</a>
-        </div>
-        <div class="drawer__cta">
-          <a class="btn btn--ghost w100" href="https://discord.gg/KKXA3P74yF" target="_blank" rel="noopener">디스코드</a>
-          <button class="btn btn--primary w100" id="btnConnectDrawer" type="button">서버 접속</button>
-          <button class="btn btn--soft w100" id="btnTebexDrawer" type="button">후원(Tebex)</button>
-        </div>
-        <div class="drawer__hint">
-          <div class="chip">Tip</div>
-          <p>서버 접속 버튼은 <b>F8 콘솔</b>에 접속 명령어를 복사해줘.</p>
-        </div>
-      </div>
-      <div class="drawer__backdrop" id="drawerBackdrop"></div>
-    </div>
-  </header>
-
-  <!-- ====== Hero ====== -->
-  <main>
-    <section class="hero">
-      <div class="hero__bg" aria-hidden="true">
-        <div class="gridGlow"></div>
-        <div class="orb orb--a"></div>
-        <div class="orb orb--b"></div>
-        <div class="scanline"></div>
-      </div>
-
-      <div class="wrap hero__inner">
-        <div class="hero__left">
-          <div class="kicker reveal">
-            <span class="pill">KOREA RP</span>
-            <span class="dot"></span>
-            <span class="muted">LINE STYLE • CLEAN • FAST</span>
-          </div>
-
-          <h1 class="hero__title reveal">
-            라인서버의 <span class="grad">개성</span>으로<br/>
-            제대로 하는 <span class="grad2">RP</span>
-          </h1>
-
-          <p class="hero__desc reveal">
-            “보기 편한 UI, 깔끔한 운영, 몰입감 있는 시스템.”<br/>
-            라인서버는 <b>뉴비도 빠르게 적응</b>하고, <b>고인물도 오래 즐길</b> 수 있게 설계했어.
-          </p>
-
-          <div class="hero__cta reveal">
-            <button class="btn btn--primary" id="btnConnectHero" type="button">서버 접속</button>
-            <a class="btn btn--ghost" href="https://discord.gg/KKXA3P74yF" target="_blank" rel="noopener">디스코드 입장</a>
-            <button class="btn btn--soft" id="btnTebexHero" type="button">후원(Tebex)</button>
-          </div>
-
-          <div class="hero__stats reveal" id="stats">
-            <div class="stat">
-              <div class="stat__label">서버 상태</div>
-              <div class="stat__value"><span class="pulse"></span><b id="serverStatus">Online</b></div>
-            </div>
-            <div class="stat">
-              <div class="stat__label">접속 인원</div>
-              <div class="stat__value"><b id="playerCount">—</b><span class="muted">/</span><span id="playerMax" class="muted">—</span></div>
-            </div>
-            <div class="stat">
-              <div class="stat__label">접속</div>
-              <div class="stat__value"><b>116.40.177.169:30120</b></div>
-            </div>
-          </div>
-
-          <div class="hero__note reveal">
-            <span class="chip">Connect</span>
-            <code id="connectCmd">connect 116.40.177.169:30120</code>
-            <button class="iconbtn" id="btnCopyConnect" type="button" aria-label="접속 명령어 복사">복사</button>
-          </div>
-        </div>
-
-        <div class="hero__right reveal">
-          <div class="card card--hero">
-            <div class="card__head">
-              <div class="card__title">한눈에 보는 라인서버</div>
-              <div class="badge">라인 감성</div>
-            </div>
-
-            <div class="featureGrid">
-              <div class="feature">
-                <div class="feature__icon">⚡</div>
-                <div class="feature__text">
-                  <b>빠른 접속</b>
-                  <span>로딩 지연 최소화</span>
-                </div>
-              </div>
-              <div class="feature">
-                <div class="feature__icon">🧭</div>
-                <div class="feature__text">
-                  <b>뉴비 가이드</b>
-                  <span>바로 적응 가능</span>
-                </div>
-              </div>
-              <div class="feature">
-                <div class="feature__icon">🛡️</div>
-                <div class="feature__text">
-                  <b>클린 운영</b>
-                  <span>룰 기반 관리</span>
-                </div>
-              </div>
-              <div class="feature">
-                <div class="feature__icon">🎛️</div>
-                <div class="feature__text">
-                  <b>보기 쉬운 UI</b>
-                  <span>한국 감성 + 고급</span>
-                </div>
-              </div>
-              <div class="feature">
-                <div class="feature__icon">🧩</div>
-                <div class="feature__text">
-                  <b>시스템 확장</b>
-                  <span>포털/관리자 연동</span>
-                </div>
-              </div>
-              <div class="feature">
-                <div class="feature__icon">💬</div>
-                <div class="feature__text">
-                  <b>디스코드 중심</b>
-                  <span>티켓/공지/연동</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card__foot">
-              <div class="mini">
-                <div class="mini__label">추천</div>
-                <div class="mini__value">처음은 “뉴비 가이드”부터</div>
-              </div>
-              <a class="miniLink" href="#guide">가이드 보기 →</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====== About ====== -->
-    <section class="section" id="about">
-      <div class="wrap">
-        <div class="section__head reveal">
-          <h2>서버 소개</h2>
-          <p class="muted">라인서버는 “몰입감”과 “편의성”을 같이 잡는 방향으로 간다.</p>
-        </div>
-
-        <div class="split">
-          <div class="panel reveal">
-            <h3>우리가 지향하는 RP</h3>
-            <ul class="bullets">
-              <li><b>몰입</b>을 깨는 요소 최소화</li>
-              <li><b>룰 기반</b> 운영 + 빠른 판정</li>
-              <li><b>뉴비 친화</b> 가이드/도움 구조</li>
-              <li><b>라인 감성 UI</b>로 가독성 극대화</li>
-            </ul>
-          </div>
-
-          <div class="panel reveal">
-            <h3>서버 시스템</h3>
-            <div class="tags">
-              <span class="tag">ESX Legacy</span>
-              <span class="tag">OXMYSQL</span>
-              <span class="tag">커스텀 HUD</span>
-              <span class="tag">커스텀 채팅</span>
-              <span class="tag">디스코드 연동(예정)</span>
-              <span class="tag">포털/관리자(예정)</span>
-            </div>
-            <p class="muted" style="margin-top:12px;">
-              * 포털/관리자는 2차에서 Firebase/DB 연동으로 실제 기능 붙이면 된다.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====== Rules ====== -->
-    <section class="section section--alt" id="rules">
-      <div class="wrap">
-        <div class="section__head reveal">
-          <h2>규칙</h2>
-          <p class="muted">핵심만 요약. 자세한 건 디스코드 규칙 채널로 연결하면 완벽.</p>
-        </div>
-
-        <div class="rulesGrid">
-          <article class="ruleCard reveal">
-            <h3>NonRP / BadRP</h3>
-            <p class="muted">현실 감각/상황을 무시하는 행동, RP 흐름을 망치는 행동.</p>
-            <ul>
-              <li>논RP 운전/무리한 드리프트/무지성 박치기</li>
-              <li>상황 파괴(강제 RP 유도, 반복 트롤)</li>
-            </ul>
-          </article>
-
-          <article class="ruleCard reveal">
-            <h3>MG / PG</h3>
-            <p class="muted">메타 정보(현실/외부) 사용, 비현실적인 강행동.</p>
-            <ul>
-              <li>디스코드로 상황 공유/현실 정보 사용</li>
-              <li>불가능한 행동을 “한다”로 밀어붙이기</li>
-            </ul>
-          </article>
-
-          <article class="ruleCard reveal">
-            <h3>RDM / VDM</h3>
-            <p class="muted">이유 없는 살해/차량 살해 행위.</p>
-            <ul>
-              <li>이유 없는 공격/총기 사용</li>
-              <li>무차별 납치/무차별 살인</li>
-            </ul>
-          </article>
-
-          <article class="ruleCard reveal">
-            <h3>시스템/버그 악용</h3>
-            <p class="muted">시스템의 허점을 이용해 이득 취하는 행동.</p>
-            <ul>
-              <li>버그/악용/테러 행위 금지</li>
-              <li>경찰·의료 RP 방해 금지</li>
-            </ul>
-          </article>
-        </div>
-
-        <div class="callout reveal">
-          <div class="callout__left">
-            <b>상세 규칙은 디스코드에 고정</b>
-            <span class="muted">사이트엔 요약, 디코엔 전문(버전 관리)</span>
-          </div>
-          <a class="btn btn--ghost" href="https://discord.gg/KKXA3P74yF" target="_blank" rel="noopener">규칙 채널로</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====== Guide ====== -->
-    <section class="section" id="guide">
-      <div class="wrap">
-        <div class="section__head reveal">
-          <h2>뉴비 가이드</h2>
-          <p class="muted">처음 들어온 사람 기준으로 “바로 할 수 있게” 정리.</p>
-        </div>
-
-        <div class="steps">
-          <div class="step reveal">
-            <div class="step__num">1</div>
-            <div class="step__body">
-              <b>FiveM 실행 → F8 콘솔</b>
-              <p class="muted">아래 접속 명령어를 입력하면 끝.</p>
-              <div class="codeRow">
-                <code id="connectCmd2">connect 116.40.177.169:30120</code>
-                <button class="iconbtn" id="btnCopyConnect2" type="button">복사</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="step reveal">
-            <div class="step__num">2</div>
-            <div class="step__body">
-              <b>디스코드 입장</b>
-              <p class="muted">공지/규칙/티켓은 디코에서 운영.</p>
-              <a class="btn btn--ghost" href="https://discord.gg/KKXA3P74yF" target="_blank" rel="noopener">디스코드 바로가기</a>
-            </div>
-          </div>
-
-          <div class="step reveal">
-            <div class="step__num">3</div>
-            <div class="step__body">
-              <b>기본 매너</b>
-              <p class="muted">MG/PG, RDM/VDM, 버그 악용은 바로 제재 대상.</p>
-              <div class="chips">
-                <span class="chip">MG</span><span class="chip">PG</span><span class="chip">RDM</span><span class="chip">VDM</span><span class="chip">Bug Abuse</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====== News / Patch ====== -->
-    <section class="section section--alt" id="news">
-      <div class="wrap">
-        <div class="section__head reveal">
-          <h2>공지 / 패치노트</h2>
-          <p class="muted">여기는 “게시판 UI”만 먼저. 나중에 Firebase 붙이면 자동화 가능.</p>
-        </div>
-
-        <div class="newsLayout">
-          <div class="newsList reveal" id="newsList" aria-label="공지 목록"></div>
-
-          <article class="newsView reveal" id="newsView" aria-label="공지 상세">
-            <div class="newsView__head">
-              <div class="badge">공지</div>
-              <h3 id="newsTitle">선택된 항목이 없음</h3>
-              <div class="muted" id="newsMeta">—</div>
-            </div>
-            <div class="newsView__body" id="newsBody">
-              왼쪽에서 공지/패치를 선택하면 여기서 보여줘.
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====== Gallery ====== -->
-    <section class="section" id="gallery">
-      <div class="wrap">
-        <div class="section__head reveal">
-          <h2>갤러리</h2>
-          <p class="muted">이미지는 나중에 너가 스샷만 넣으면 완성. 지금은 자리만 잡아둠.</p>
-        </div>
-
-        <div class="galleryGrid reveal" id="galleryGrid"></div>
-
-        <div class="callout reveal">
-          <div class="callout__left">
-            <b>스샷 8~12장만 주면 진짜 “공식 사이트 느낌” 바로 난다</b>
-            <span class="muted">이미지 넣는 법은 app.js 상단에 주석으로 써뒀어.</span>
-          </div>
-          <button class="btn btn--soft" id="btnOpenLightbox" type="button">미리보기</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====== Portal ====== -->
-    <section class="section section--alt" id="portal">
-      <div class="wrap">
-        <div class="section__head reveal">
-          <h2>유저 포털</h2>
-          <p class="muted">여긴 “UI + 로컬 테스트”만. (2차에서 Firebase/DB 연동하면 진짜 로그인 됨)</p>
-        </div>
-
-        <div class="portalGrid">
-          <div class="panel reveal">
-            <h3>로그인</h3>
-            <p class="muted">고유번호/닉네임으로 로그인하는 형태로 확장 가능.</p>
-
-            <form class="form" id="loginForm">
-              <label class="field">
-                <span>고유번호</span>
-                <input id="fid" type="text" inputmode="numeric" placeholder="예: 1001" autocomplete="off"/>
-              </label>
-              <label class="field">
-                <span>닉네임</span>
-                <input id="fname" type="text" placeholder="예: 곽두칠" autocomplete="off"/>
-              </label>
-
-              <div class="row">
-                <button class="btn btn--primary" type="submit">로그인</button>
-                <button class="btn btn--ghost" id="btnLogout" type="button">로그아웃</button>
-              </div>
-
-              <div class="hint">
-                <div class="chip">dev</div>
-                <p class="muted">지금은 브라우저 저장(LocalStorage)로만 동작.</p>
-              </div>
-            </form>
-          </div>
-
-          <div class="panel reveal">
-            <h3>내 프로필</h3>
-            <div class="profile" id="profile">
-              <div class="profile__row">
-                <div class="profile__label">닉네임</div>
-                <div class="profile__value" id="pName">—</div>
-              </div>
-              <div class="profile__row">
-                <div class="profile__label">고유번호</div>
-                <div class="profile__value" id="pId">—</div>
-              </div>
-              <div class="profile__row">
-                <div class="profile__label">직업</div>
-                <div class="profile__value" id="pJob">—</div>
-              </div>
-              <div class="profile__row">
-                <div class="profile__label">플레이타임</div>
-                <div class="profile__value" id="pPlaytime">—</div>
-              </div>
-
-              <div class="divider"></div>
-
-              <div class="muted small">
-                * 2차에서 실제 DB 연동 시: 직업/플탐/자산/제재기록 등 자동 표시 가능.
-              </div>
-            </div>
-          </div>
-
-          <div class="panel reveal">
-            <h3>문의 / 신고</h3>
-            <p class="muted">티켓 시스템은 디스코드가 제일 편해.</p>
-            <div class="row">
-              <a class="btn btn--ghost w100" href="https://discord.gg/KKXA3P74yF" target="_blank" rel="noopener">티켓 열기</a>
-              <button class="btn btn--soft w100" id="btnCopyDiscord" type="button">디코 링크 복사</button>
-            </div>
-
-            <div class="divider"></div>
-
-            <h3 style="margin-top:14px;">후원</h3>
-            <p class="muted">Tebex 링크만 넣으면 버튼이 바로 동작.</p>
-            <button class="btn btn--primary w100" id="btnTebexPortal" type="button">후원 페이지 열기</button>
-            <p class="muted small" style="margin-top:10px;">
-              * Tebex 링크는 app.js 상단의 <b>TEBEX_URL</b>만 바꾸면 됨.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====== Footer ====== -->
-    <footer class="footer">
-      <div class="wrap footer__inner">
-        <div class="footer__left">
-          <div class="brand brand--footer">
-            <span class="brand__mark" aria-hidden="true"></span>
-            <span class="brand__text"><b>LINE</b><span>RP SERVER</span></span>
-          </div>
-          <p class="muted small">
-            © LINE RP SERVER. All rights reserved.<br/>
-            운영/문의: 디스코드 티켓 이용
-          </p>
-        </div>
-        <div class="footer__right">
-          <a class="footerLink" href="#top">맨 위로</a>
-          <a class="footerLink" href="https://discord.gg/KKXA3P74yF" target="_blank" rel="noopener">디스코드</a>
-          <button class="footerLink asBtn" id="btnConnectFooter" type="button">서버 접속</button>
-        </div>
-      </div>
-    </footer>
-  </main>
-
-  <!-- Toast -->
-  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lightbox__panel" role="dialog" aria-modal="true" aria-label="갤러리 미리보기">
-      <div class="lightbox__head">
-        <b id="lightboxTitle">Gallery</b>
-        <button class="iconbtn" id="lightboxClose" type="button" aria-label="닫기">✕</button>
-      </div>
-      <div class="lightbox__body">
-        <img id="lightboxImg" alt="gallery preview" />
-      </div>
-      <div class="lightbox__foot">
-        <button class="btn btn--ghost" id="lightboxPrev" type="button">이전</button>
-        <button class="btn btn--primary" id="lightboxNext" type="button">다음</button>
-      </div>
-    </div>
-    <div class="lightbox__backdrop" id="lightboxBackdrop"></div>
+<div class="card">
+  <h1>RAON SERVER</h1>
+  <div class="sub">
+    2026년 3월 21일 오픈 예정<br>
+    사전예약 시 디스코드 전용 역할 지급
   </div>
 
-  <script src="app.js"></script>
+  <div class="timer">
+    <div class="timebox">
+      <div class="num" id="d">0</div>
+      <div class="label">DAYS</div>
+    </div>
+    <div class="timebox">
+      <div class="num" id="h">00</div>
+      <div class="label">HOURS</div>
+    </div>
+    <div class="timebox">
+      <div class="num" id="m">00</div>
+      <div class="label">MIN</div>
+    </div>
+    <div class="timebox">
+      <div class="num" id="s">00</div>
+      <div class="label">SEC</div>
+    </div>
+  </div>
+
+  <div class="checkbox">
+    <input type="checkbox" id="agree">
+    <label for="agree">서버 규칙 및 약관에 동의합니다.</label>
+  </div>
+
+  <button id="reserveBtn" disabled>사전예약 하기</button>
+</div>
+
+<script>
+// 카운트다운
+const target = new Date("2026-03-21T00:00:00+09:00").getTime();
+
+function updateTimer(){
+  const now = new Date().getTime();
+  const diff = target - now;
+
+  if(diff <= 0){
+    document.getElementById("d").innerText = "0";
+    document.getElementById("h").innerText = "00";
+    document.getElementById("m").innerText = "00";
+    document.getElementById("s").innerText = "00";
+    return;
+  }
+
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((diff % (1000*60*60))/(1000*60));
+  const seconds = Math.floor((diff % (1000*60))/1000);
+
+  document.getElementById("d").innerText = days;
+  document.getElementById("h").innerText = String(hours).padStart(2,'0');
+  document.getElementById("m").innerText = String(minutes).padStart(2,'0');
+  document.getElementById("s").innerText = String(seconds).padStart(2,'0');
+}
+
+setInterval(updateTimer,1000);
+updateTimer();
+
+// 체크박스 활성화
+const agree = document.getElementById("agree");
+const btn = document.getElementById("reserveBtn");
+
+agree.addEventListener("change",()=>{
+  btn.disabled = !agree.checked;
+});
+
+// 버튼 클릭 (아직 디코 연동은 없음)
+btn.addEventListener("click",()=>{
+  alert("사전예약이 접수되었습니다! (디스코드 연동은 다음 단계)");
+});
+</script>
+
 </body>
 </html>
