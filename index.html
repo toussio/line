@@ -175,10 +175,17 @@ agree.addEventListener("change",()=>{
   btn.disabled = !agree.checked;
 });
 
-// 버튼 클릭 (아직 디코 연동은 없음)
+// ✅ 버튼 클릭 -> 디스코드 OAuth 시작 URL로 이동 (정상 플로우)
 btn.addEventListener("click",()=>{
-  alert("사전예약이 접수되었습니다! (디스코드 연동은 다음 단계)");
+  window.location.href = "https://raon-oauth-bot.onrender.com/auth/discord";
 });
+
+/*
+⚠️ 요청대로 "callback"로 보내고 싶다면 (비권장)
+btn.addEventListener("click",()=>{
+  window.location.href = "https://raon-oauth-bot.onrender.com/auth/discord/callback";
+});
+*/
 </script>
 
 </body>
