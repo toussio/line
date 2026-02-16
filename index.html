@@ -41,10 +41,9 @@ body{
     linear-gradient(180deg, var(--bgA), var(--bgB));
 }
 
-/* 카드 */
 .card{
   width:100%;
-  max-width:720px;
+  max-width:760px;
   background:var(--card);
   border:1px solid var(--line);
   border-radius:var(--r);
@@ -52,7 +51,6 @@ body{
   padding:28px;
 }
 
-/* 헤더 */
 .top{
   display:flex;
   justify-content:space-between;
@@ -73,7 +71,6 @@ body{
   font-size:14px;
 }
 
-/* 뱃지 */
 .badge{
   flex:0 0 auto;
   display:flex;
@@ -88,7 +85,6 @@ body{
 }
 .badge b{ color:var(--pink); }
 
-/* 타이머 */
 .timer{
   display:grid;
   grid-template-columns: repeat(4, 1fr);
@@ -113,7 +109,6 @@ body{
   color:var(--mut);
 }
 
-/* 동의 */
 .row{
   display:flex;
   align-items:center;
@@ -124,7 +119,6 @@ body{
 }
 .row input{ transform: translateY(1px); }
 
-/* 버튼 */
 button{
   width:100%;
   border:none;
@@ -146,7 +140,6 @@ button:disabled{
   box-shadow:none;
 }
 
-/* 상태메시지 */
 .status{
   margin-top:12px;
   border-radius:16px;
@@ -186,6 +179,7 @@ button:disabled{
   font-size:12px;
   color:rgba(18,19,24,.55);
 }
+
 @media (max-width:620px){
   .timer{ grid-template-columns: repeat(2, 1fr); }
 }
@@ -241,6 +235,9 @@ button:disabled{
 /* ===== 설정 ===== */
 const OAUTH_START_URL = "https://raon-oauth-bot.onrender.com/auth/discord";
 const COUNT_API_URL   = "https://raon-oauth-bot.onrender.com/api/reserve-count";
+
+/* ✅ 로컬 잠금키(브라우저 새로고침해도 유지) */
+const LS_KEY = "raon_reserved_done";
 
 /* ===== 카운트다운 ===== */
 const target = new Date("2026-03-21T00:00:00+09:00").getTime();
@@ -299,12 +296,25 @@ async function refreshCount(){
       cntEl.textContent = j.count.toLocaleString("ko-KR");
     }
   }catch(e){
-    // CORS/네트워크 문제면 계속 … 로 남을 수 있음
-    // (이럴 때는 index.js에 CORS 추가가 필요)
+    // CORS/네트워크 실패면 ... 유지
   }
 }
 refreshCount();
 setInterval(refreshCount, 8000);
+
+/* ===== 버튼 잠금(완료 상태) ===== */
+function lockDone(text, type, messageHtml){
+  btn.disabled = true;
+  btn.dataset.locked = "1";
+  btn.textContent = text;
+  agree.checked = true;
+
+  statusEl.className = "status " + type;
+  statusEl.innerHTML = messageHtml;
+
+  // ✅ 브라우저에서도 “이미 완료” 기억
+  localStorage.setItem(LS_KEY, "1");
+}
 
 /* ===== 결과 파라미터 처리 ===== */
 (function handleResult(){
@@ -313,32 +323,41 @@ setInterval(refreshCount, 8000);
   const already = params.get("already");
   const reason = params.get("reason");
 
-  if (!ok && !already && !reason) return;
+  // ✅ 서버에서 ok/already 안 와도, 내 브라우저에서 이미 완료면 잠금 유지
+  if (localStorage.getItem(LS_KEY) === "1") {
+    lockDone(
+      "이미 사전예약 완료",
+      "already",
+      "<strong>이미 사전예약 완료됨</strong><br>이 브라우저에서는 사전예약이 완료 상태입니다."
+    );
+    return;
+  }
 
   if (already === "1") {
-    statusEl.className = "status already";
-    statusEl.innerHTML = "<strong>이미 사전예약 완료됨</strong><br>디스코드에서 역할이 이미 지급되어 있습니다.";
-    agree.checked = true;
-    btn.disabled = true;
-    btn.dataset.locked = "1";
-    btn.textContent = "이미 사전예약 완료";
+    lockDone(
+      "이미 사전예약 완료",
+      "already",
+      "<strong>이미 사전예약 완료됨</strong><br>디스코드에서 역할이 이미 지급되어 있습니다."
+    );
     return;
   }
 
   if (ok === "1") {
-    statusEl.className = "status ok";
-    statusEl.innerHTML = "<strong>사전예약 완료!</strong><br>디스코드에서 역할이 지급되었습니다.";
-    agree.checked = true;
-    btn.disabled = true;
-    btn.dataset.locked = "1";
-    btn.textContent = "사전예약 완료";
-    refreshCount();
+    lockDone(
+      "사전예약 완료",
+      "ok",
+      "<strong>사전예약 완료!</strong><br>디스코드에서 역할이 지급되었습니다."
+    );
+    refreshCount(); // 즉시 카운트 갱신
     return;
   }
 
   if (reason === "not_in_guild") {
     statusEl.className = "status fail";
-    statusEl.innerHTML = "<strong>디스코드 서버에 먼저 들어와야 해요</strong><br>서버 입장 후 다시 시도해주세요.";
+    statusEl.style.display = "block";
+    statusEl.innerHTML =
+      "<strong>디스코드 서버에 먼저 들어와야 해요</strong><br>서버 입장 후 다시 시도해주세요.";
+
     btn.dataset.locked = "0";
     btn.disabled = !agree.checked;
     return;
@@ -346,7 +365,10 @@ setInterval(refreshCount, 8000);
 
   if (ok === "0") {
     statusEl.className = "status fail";
-    statusEl.innerHTML = "<strong>사전예약 실패</strong><br>잠시 후 다시 시도하거나 관리자에게 문의하세요.";
+    statusEl.style.display = "block";
+    statusEl.innerHTML =
+      "<strong>사전예약 실패</strong><br>잠시 후 다시 시도하거나 관리자에게 문의하세요.";
+
     btn.dataset.locked = "0";
     btn.disabled = !agree.checked;
   }
