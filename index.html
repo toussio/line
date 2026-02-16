@@ -1,31 +1,24 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>RAON SERVER 사전예약</title>
 
 <style>
 :root{
-  --bg:#0b0f17;
+  --bg:#f6f1ea;
+  --card:#ffffff;
+  --line:#eadfd3;
 
-  /* ✅ 덜 쨍하고 부드러운 톤 */
-  --card: rgba(255,255,255,.045);
-  --line: rgba(255,255,255,.10);
+  --txt:#2b2620;
+  --mut:#8a7f73;
 
-  --txt: rgba(255,255,255,.92);
-  --mut: rgba(255,255,255,.62);
+  /* 따뜻한 메인 컬러 */
+  --main:#ffb26b;
+  --main2:#ff8f3f;
 
-  /* ✅ 메인 컬러는 유지하되 과하지 않게 */
-  --main: #57F287;
-  --main2:#39d971;
-
-  /* ✅ 부드러운 그림자 */
-  --shadow: 0 22px 70px rgba(0,0,0,.55);
-
-  /* ✅ 배경 글로우 강도 */
-  --glow: rgba(87,242,135,.10);
-  --glow2: rgba(87,242,135,.06);
+  --shadow:0 30px 80px rgba(0,0,0,.10);
 }
 
 *{
@@ -35,11 +28,10 @@
 
 body{
   margin:0;
-  /* ✅ 화면 쨍함 줄이기 */
   background:
-    radial-gradient(circle at 18% 18%, var(--glow), transparent 62%),
-    radial-gradient(circle at 80% 70%, var(--glow2), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.02), transparent 40%),
+    radial-gradient(circle at 18% 18%, rgba(255,178,107,.18), transparent 62%),
+    radial-gradient(circle at 82% 70%, rgba(255,143,63,.12), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.55), transparent 40%),
     var(--bg);
   color:var(--txt);
   display:flex;
@@ -51,154 +43,187 @@ body{
 
 .card{
   width:100%;
-  max-width:620px;
-  background: var(--card);
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  padding: 32px;
-  backdrop-filter: blur(12px);
-  box-shadow: var(--shadow);
-  position: relative;
-  overflow: hidden;
+  max-width:640px;
+  background:rgba(255,255,255,.92);
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:34px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
 }
 
-/* ✅ 카드 상단 은은한 하이라이트 */
 .card::before{
   content:"";
   position:absolute;
   inset:-2px;
-  background: radial-gradient(circle at 20% 0%, rgba(255,255,255,.08), transparent 45%);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(255,178,107,.18), transparent 50%),
+    radial-gradient(circle at 90% 20%, rgba(255,143,63,.10), transparent 55%);
   pointer-events:none;
 }
 
 h1{
-  margin:0 0 10px;
+  margin:0 0 8px;
   font-size:30px;
-  letter-spacing:.2px;
+  letter-spacing:.3px;
 }
 
 .sub{
   color:var(--mut);
-  margin-bottom:22px;
-  line-height:1.5;
+  margin-bottom:18px;
+  line-height:1.55;
+}
+
+.people{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:14px 14px;
+  margin-bottom:18px;
+  border:1px solid var(--line);
+  border-radius:18px;
+  background:rgba(255,178,107,.10);
+}
+
+.people .left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+}
+
+.badgeDot{
+  width:10px; height:10px;
+  border-radius:50%;
+  background:var(--main2);
+  box-shadow:0 0 18px rgba(255,143,63,.35);
+}
+
+.people .title{
+  font-size:14px;
+  color:rgba(43,38,32,.92);
+}
+
+.people .count{
+  font-size:22px;
+  font-weight:1000;
+  letter-spacing:.3px;
+  color:rgba(43,38,32,.98);
+}
+
+.people .count span{
+  font-size:13px;
+  font-weight:900;
+  color:var(--mut);
+  margin-left:6px;
 }
 
 .timer{
   display:flex;
   justify-content:space-between;
   gap:10px;
-  margin-bottom:22px;
+  margin-bottom:18px;
 }
 
 .timebox{
   flex:1;
-  background: rgba(255,255,255,.035);
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: 14px;
-  padding: 16px 14px;
+  background:rgba(255,255,255,.75);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px 14px;
   text-align:center;
 }
 
 .num{
   font-size:28px;
-  font-weight:900;
+  font-weight:1000;
 }
 
 .label{
   font-size:12px;
   color:var(--mut);
   margin-top:5px;
-  letter-spacing:.8px;
+  letter-spacing:.9px;
 }
 
 .checkbox{
   display:flex;
   gap:10px;
-  margin-bottom:16px;
+  margin: 8px 0 14px;
   font-size:14px;
-  color: rgba(255,255,255,.82);
+  color:rgba(43,38,32,.90);
 }
-.checkbox input{ accent-color: var(--main); }
+.checkbox input{ accent-color: var(--main2); }
 
-/* ✅ CTA 배지 */
 .cta-badge{
   display:inline-flex;
   align-items:center;
   gap:8px;
-  margin: 0 0 10px;
-  padding: 7px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(87,242,135,.25);
-  background: rgba(87,242,135,.08);
-  color: rgba(255,255,255,.90);
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: .6px;
+  margin: 2px 0 10px;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,143,63,.25);
+  background:rgba(255,143,63,.10);
+  color:rgba(43,38,32,.92);
+  font-size:12px;
+  font-weight:1000;
+  letter-spacing:.6px;
 }
 .cta-dot{
   width:8px; height:8px;
   border-radius:50%;
-  background: var(--main);
-  box-shadow: 0 0 18px rgba(87,242,135,.65);
+  background:var(--main2);
+  box-shadow:0 0 16px rgba(255,143,63,.35);
 }
 
 button{
   width:100%;
   padding:16px;
-  border-radius:16px;
-  border: 1px solid rgba(87,242,135,.35);
+  border-radius:18px;
+  border:1px solid rgba(255,143,63,.35);
   font-size:16px;
   font-weight:1000;
   cursor:pointer;
-  color:#08110b;
+  color:#2b2620;
 
-  /* ✅ 더 또렷한 버튼 */
   background:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,.40), transparent 45%),
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.55), transparent 45%),
     linear-gradient(180deg, var(--main), var(--main2));
 
-  box-shadow:
-    0 18px 45px rgba(87,242,135,.18),
-    0 0 0 1px rgba(0,0,0,.15) inset;
-
+  box-shadow:0 18px 45px rgba(255,143,63,.20);
   transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
 }
 
 button:hover{
-  transform: translateY(-2px);
-  filter: brightness(1.02);
-  box-shadow:
-    0 24px 60px rgba(87,242,135,.22),
-    0 0 0 1px rgba(0,0,0,.15) inset;
+  transform:translateY(-2px);
+  filter:brightness(1.02);
+  box-shadow:0 24px 60px rgba(255,143,63,.24);
 }
 
 button:active{
-  transform: translateY(0px);
-  filter: brightness(.98);
+  transform:translateY(0);
+  filter:brightness(.98);
 }
 
 button:disabled{
-  opacity:.45;
+  opacity:.55;
   cursor:not-allowed;
-  transform:none;
-  filter:none;
-  box-shadow:none;
-  border-color: rgba(255,255,255,.10);
-  background: rgba(255,255,255,.06);
-  color: rgba(255,255,255,.60);
+  background:rgba(0,0,0,.06);
+  color:rgba(43,38,32,.55);
 }
 
-/* ✅ 상태 메시지 */
 .status{
   margin-top:12px;
   font-size:13px;
   color:var(--mut);
   line-height:1.45;
 }
-.status strong{ color:#fff; }
-.status.ok strong{ color:#57F287; }
-.status.already strong{ color:#FFD166; }
-.status.fail strong{ color:#FF5C5C; }
+.status strong{ color:var(--txt); }
+.status.ok strong{ color:#ff8f3f; }
+.status.already strong{ color:#c07a2c; }
+.status.fail strong{ color:#d64545; }
 </style>
 </head>
 
@@ -207,8 +232,19 @@ button:disabled{
   <h1>RAON SERVER</h1>
 
   <div class="sub">
-    2026년 3월 21일 오픈 예정<br>
+    2026년 3월 21일 오픈 예정<br />
     많이 기대해주세요!!
+  </div>
+
+  <!-- 사전예약 인원 표시 -->
+  <div class="people">
+    <div class="left">
+      <span class="badgeDot"></span>
+      <div class="title">사전예약 인원</div>
+    </div>
+    <div class="count">
+      <b id="peopleCount">--</b><span>명</span>
+    </div>
   </div>
 
   <div class="timer">
@@ -230,14 +266,12 @@ button:disabled{
     </div>
   </div>
 
-  <!-- ✅ 사전예약 강조 배지 -->
   <div class="cta-badge">
-    <span class="cta-dot"></span>
-    사전예약 진행
+    <span class="cta-dot"></span>사전예약 진행
   </div>
 
   <div class="checkbox">
-    <input type="checkbox" id="agree">
+    <input type="checkbox" id="agree" />
     <label for="agree">서버 규칙 및 약관에 동의합니다.</label>
   </div>
 
@@ -248,96 +282,95 @@ button:disabled{
 <script>
 // ===== 설정 =====
 const OAUTH_START_URL = "https://raon-oauth-bot.onrender.com/auth/discord";
+const RESERVE_COUNT_API = "https://raon-oauth-bot.onrender.com/api/reserve-count";
+
+// ===== 사전예약 인원 로딩 =====
+async function loadReserveCount(){
+  try{
+    const res = await fetch(RESERVE_COUNT_API);
+    const json = await res.json();
+    const n = Number(json?.count ?? json?.data ?? 0);
+    document.getElementById("peopleCount").innerText = isNaN(n)? "--" : n.toLocaleString();
+  }catch(e){
+    document.getElementById("peopleCount").innerText = "--";
+  }
+}
+// 처음 + 주기 갱신
+loadReserveCount();
+setInterval(loadReserveCount, 30000);
 
 // ===== 카운트다운 =====
 const target = new Date("2026-03-21T00:00:00+09:00").getTime();
-
 function updateTimer(){
   const now = Date.now();
   const diff = target - now;
-
   if(diff <= 0){
-    document.getElementById("d").innerText = "0";
-    document.getElementById("h").innerText = "00";
-    document.getElementById("m").innerText = "00";
-    document.getElementById("s").innerText = "00";
+    ["d","h","m","s"].forEach(id=>document.getElementById(id).innerText="00");
     return;
   }
-
-  const days = Math.floor(diff / (1000*60*60*24));
-  const hours = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
-  const minutes = Math.floor((diff % (1000*60*60))/(1000*60));
-  const seconds = Math.floor((diff % (1000*60))/1000);
+  const days = Math.floor(diff/(1000*60*60*24));
+  const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
+  const seconds = Math.floor((diff%(1000*60))/1000);
 
   document.getElementById("d").innerText = days;
-  document.getElementById("h").innerText = String(hours).padStart(2,'0');
-  document.getElementById("m").innerText = String(minutes).padStart(2,'0');
-  document.getElementById("s").innerText = String(seconds).padStart(2,'0');
+  document.getElementById("h").innerText = String(hours).padStart(2,"0");
+  document.getElementById("m").innerText = String(minutes).padStart(2,"0");
+  document.getElementById("s").innerText = String(seconds).padStart(2,"0");
 }
-
 setInterval(updateTimer,1000);
 updateTimer();
 
-// ===== DOM =====
+// ===== DOM & 버튼 =====
 const agree = document.getElementById("agree");
 const btn = document.getElementById("reserveBtn");
 const statusEl = document.getElementById("status");
 
-// ===== 체크박스 활성화 =====
 agree.addEventListener("change",()=>{
-  if (btn.dataset.locked === "1") return;
+  if(btn.dataset.locked==="1")return;
   btn.disabled = !agree.checked;
 });
 
-// ===== 디스코드 OAuth 시작 =====
-btn.addEventListener("click",()=>{
+btn.addEventListener("click",()=> {
   window.location.href = OAUTH_START_URL;
 });
 
-// ===== 결과 파라미터 처리 =====
-// 봇에서 redirect 시:
-// ?ok=1                 => 사전예약 완료
-// ?already=1            => 이미 완료
-// ?ok=0                 => 실패
-// ?reason=not_in_guild  => 서버 미입장
-(function handleResult(){
-  const params = new URLSearchParams(window.location.search);
-  const ok = params.get("ok");
-  const already = params.get("already");
-  const reason = params.get("reason");
+// ===== 결과 처리 =====
+(function(){
+  const p = new URLSearchParams(location.search);
+  const ok = p.get("ok");
+  const al = p.get("already");
+  const reason = p.get("reason");
 
-  if (already === "1") {
-    statusEl.className = "status already";
-    statusEl.innerHTML = "<strong>이미 사전예약 완료됨</strong><br>디스코드에서 역할이 이미 지급되어 있습니다.";
-    agree.checked = true;
-    btn.disabled = true;
-    btn.dataset.locked = "1";
-    btn.innerText = "이미 사전예약 완료";
+  if(al==="1"){
+    statusEl.className="status already";
+    statusEl.innerHTML="<strong>이미 사전예약됨</strong><br>디스코드 역할이 지급되어 있습니다.";
+    agree.checked=true;
+    btn.disabled=true;
+    btn.dataset.locked="1";
+    btn.innerText="이미 완료";
     return;
   }
-
-  if (ok === "1") {
-    statusEl.className = "status ok";
-    statusEl.innerHTML = "<strong>사전예약 완료!</strong><br>디스코드에서 역할이 지급되었습니다.";
-    agree.checked = true;
-    btn.disabled = true;
-    btn.dataset.locked = "1";
-    btn.innerText = "사전예약 완료";
+  if(ok==="1"){
+    statusEl.className="status ok";
+    statusEl.innerHTML="<strong>사전예약 완료!</strong><br>디스코드 역할이 지급되었습니다.";
+    agree.checked=true;
+    btn.disabled=true;
+    btn.dataset.locked="1";
+    btn.innerText="사전예약 완료";
     return;
   }
-
-  if (reason === "not_in_guild") {
-    statusEl.className = "status fail";
-    statusEl.innerHTML = "<strong>서버에 먼저 들어와야 해요</strong><br>디스코드 서버에 입장 후 다시 시도하세요.";
-    btn.dataset.locked = "0";
+  if(reason==="not_in_guild"){
+    statusEl.className="status fail";
+    statusEl.innerHTML="<strong>먼저 서버에 입장해주세요</strong><br>디스코드 서버에 들어간 후 다시 시도하세요.";
+    btn.dataset.locked="0";
     btn.disabled = !agree.checked;
     return;
   }
-
-  if (ok === "0") {
-    statusEl.className = "status fail";
-    statusEl.innerHTML = "<strong>사전예약 실패</strong><br>잠시 후 다시 시도하거나 관리자에게 문의하세요.";
-    btn.dataset.locked = "0";
+  if(ok==="0"){
+    statusEl.className="status fail";
+    statusEl.innerHTML="<strong>실패</strong><br>잠시 후 다시 시도해주세요.";
+    btn.dataset.locked="0";
     btn.disabled = !agree.checked;
   }
 })();
