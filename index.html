@@ -112,6 +112,19 @@ button:disabled{
   transform:none;
   box-shadow:none;
 }
+
+/* ✅ 상태 메시지 */
+.status{
+  margin-top:12px;
+  font-size:13px;
+  color:var(--mut);
+  line-height:1.4;
+}
+.status strong{ color:#fff; }
+
+.status.ok strong{ color:#57F287; }
+.status.already strong{ color:#FFD166; }
+.status.fail strong{ color:#FF5C5C; }
 </style>
 </head>
 <body>
@@ -149,9 +162,12 @@ button:disabled{
   </div>
 
   <button id="reserveBtn" disabled>사전예약 하기</button>
+  <div id="status" class="status"></div>
 </div>
 
 <script>
+// ===== 설정 =====
+const OAUTH_START_URL = "https://raon-oauth-bot.onrender.com/auth/discord";
 
 // ===== 카운트다운 =====
 const target = new Date("2026-03-21T00:00:00+09:00").getTime();
@@ -182,21 +198,71 @@ function updateTimer(){
 setInterval(updateTimer,1000);
 updateTimer();
 
-
-// ===== 체크박스 활성화 =====
+// ===== DOM =====
 const agree = document.getElementById("agree");
 const btn = document.getElementById("reserveBtn");
+const statusEl = document.getElementById("status");
 
+// ===== 체크박스 활성화 =====
 agree.addEventListener("change",()=>{
+  // 결과 상태로 버튼이 잠겨있으면(완료/이미완료) 다시 풀지 않음
+  if (btn.dataset.locked === "1") return;
   btn.disabled = !agree.checked;
 });
 
-
 // ===== 디스코드 OAuth 시작 =====
 btn.addEventListener("click",()=>{
-  window.location.href = "https://raon-oauth-bot.onrender.com/auth/discord";
+  window.location.href = OAUTH_START_URL;
 });
 
+// ===== 결과 파라미터 처리 =====
+// 봇에서 redirect 시:
+// ?ok=1            => 사전예약 완료
+// ?already=1       => 이미 완료
+// ?ok=0            => 실패
+// ?reason=not_in_guild => 서버 미입장
+(function handleResult(){
+  const params = new URLSearchParams(window.location.search);
+  const ok = params.get("ok");
+  const already = params.get("already");
+  const reason = params.get("reason");
+
+  if (already === "1") {
+    statusEl.className = "status already";
+    statusEl.innerHTML = "<strong>이미 사전예약 완료됨</strong><br>디스코드에서 역할이 이미 지급되어 있습니다.";
+    agree.checked = true;
+    btn.disabled = true;
+    btn.dataset.locked = "1";
+    btn.innerText = "이미 사전예약 완료";
+    return;
+  }
+
+  if (ok === "1") {
+    statusEl.className = "status ok";
+    statusEl.innerHTML = "<strong>사전예약 완료!</strong><br>디스코드에서 역할이 지급되었습니다.";
+    agree.checked = true;
+    btn.disabled = true;
+    btn.dataset.locked = "1";
+    btn.innerText = "사전예약 완료";
+    return;
+  }
+
+  if (reason === "not_in_guild") {
+    statusEl.className = "status fail";
+    statusEl.innerHTML = "<strong>서버에 먼저 들어와야 해요</strong><br>디스코드 서버에 입장 후 다시 시도하세요.";
+    // 실패이므로 다시 시도 가능
+    btn.dataset.locked = "0";
+    btn.disabled = !agree.checked;
+    return;
+  }
+
+  if (ok === "0") {
+    statusEl.className = "status fail";
+    statusEl.innerHTML = "<strong>사전예약 실패</strong><br>잠시 후 다시 시도하거나 관리자에게 문의하세요.";
+    btn.dataset.locked = "0";
+    btn.disabled = !agree.checked;
+  }
+})();
 </script>
 
 </body>
