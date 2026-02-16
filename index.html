@@ -7,370 +7,347 @@
 
 <style>
 :root{
-  --bg:#f6f1ea;
+  --bgA:#ffe9f3;
+  --bgB:#fff6fb;
+
   --card:#ffffff;
-  --line:#eadfd3;
+  --line:rgba(255,74,154,.18);
 
-  --txt:#2b2620;
-  --mut:#8a7f73;
+  --txt:#121318;
+  --mut:rgba(18,19,24,.60);
 
-  /* 따뜻한 메인 컬러 */
-  --main:#ffb26b;
-  --main2:#ff8f3f;
+  --pink:#ff4a9a;
+  --pink2:#ff84c1;
 
-  --shadow:0 30px 80px rgba(0,0,0,.10);
+  --ok:#14b87a;
+  --warn:#ffb020;
+  --bad:#ff3b3b;
+
+  --r:24px;
 }
 
-*{
-  box-sizing:border-box;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,"Pretendard","Noto Sans KR",Arial;
-}
-
+*{ box-sizing:border-box; font-family:system-ui,-apple-system,Segoe UI,Roboto,"Pretendard","Noto Sans KR",Arial; }
 body{
   margin:0;
-  background:
-    radial-gradient(circle at 18% 18%, rgba(255,178,107,.18), transparent 62%),
-    radial-gradient(circle at 82% 70%, rgba(255,143,63,.12), transparent 60%),
-    linear-gradient(180deg, rgba(255,255,255,.55), transparent 40%),
-    var(--bg);
-  color:var(--txt);
+  min-height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
-  padding:20px;
+  padding:24px;
+  color:var(--txt);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255,74,154,.22), transparent 55%),
+    radial-gradient(circle at 85% 28%, rgba(255,132,193,.22), transparent 55%),
+    linear-gradient(180deg, var(--bgA), var(--bgB));
 }
 
+/* 카드 */
 .card{
   width:100%;
-  max-width:640px;
-  background:rgba(255,255,255,.92);
+  max-width:720px;
+  background:var(--card);
   border:1px solid var(--line);
-  border-radius:26px;
-  padding:34px;
-  box-shadow:var(--shadow);
-  position:relative;
-  overflow:hidden;
+  border-radius:var(--r);
+  box-shadow:0 24px 80px rgba(255,74,154,.18);
+  padding:28px;
 }
 
-.card::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background:
-    radial-gradient(circle at 20% 0%, rgba(255,178,107,.18), transparent 50%),
-    radial-gradient(circle at 90% 20%, rgba(255,143,63,.10), transparent 55%);
-  pointer-events:none;
+/* 헤더 */
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:16px;
+  margin-bottom:18px;
 }
-
-h1{
-  margin:0 0 8px;
-  font-size:30px;
-  letter-spacing:.3px;
+.title{
+  font-size:32px;
+  font-weight:900;
+  margin:0;
+  letter-spacing:.2px;
 }
-
 .sub{
+  margin-top:8px;
   color:var(--mut);
-  margin-bottom:18px;
   line-height:1.55;
-}
-
-.people{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:14px 14px;
-  margin-bottom:18px;
-  border:1px solid var(--line);
-  border-radius:18px;
-  background:rgba(255,178,107,.10);
-}
-
-.people .left{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-weight:900;
-}
-
-.badgeDot{
-  width:10px; height:10px;
-  border-radius:50%;
-  background:var(--main2);
-  box-shadow:0 0 18px rgba(255,143,63,.35);
-}
-
-.people .title{
   font-size:14px;
-  color:rgba(43,38,32,.92);
 }
 
-.people .count{
-  font-size:22px;
-  font-weight:1000;
-  letter-spacing:.3px;
-  color:rgba(43,38,32,.98);
-}
-
-.people .count span{
-  font-size:13px;
-  font-weight:900;
-  color:var(--mut);
-  margin-left:6px;
-}
-
-.timer{
+/* 뱃지 */
+.badge{
+  flex:0 0 auto;
   display:flex;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:18px;
-}
-
-.timebox{
-  flex:1;
-  background:rgba(255,255,255,.75);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:16px 14px;
-  text-align:center;
-}
-
-.num{
-  font-size:28px;
-  font-weight:1000;
-}
-
-.label{
-  font-size:12px;
-  color:var(--mut);
-  margin-top:5px;
-  letter-spacing:.9px;
-}
-
-.checkbox{
-  display:flex;
-  gap:10px;
-  margin: 8px 0 14px;
-  font-size:14px;
-  color:rgba(43,38,32,.90);
-}
-.checkbox input{ accent-color: var(--main2); }
-
-.cta-badge{
-  display:inline-flex;
   align-items:center;
   gap:8px;
-  margin: 2px 0 10px;
-  padding:7px 12px;
+  padding:10px 14px;
   border-radius:999px;
-  border:1px solid rgba(255,143,63,.25);
-  background:rgba(255,143,63,.10);
-  color:rgba(43,38,32,.92);
-  font-size:12px;
-  font-weight:1000;
-  letter-spacing:.6px;
+  border:1px solid rgba(255,74,154,.25);
+  background:linear-gradient(180deg, rgba(255,74,154,.10), rgba(255,132,193,.08));
+  font-weight:900;
+  font-size:13px;
 }
-.cta-dot{
-  width:8px; height:8px;
-  border-radius:50%;
-  background:var(--main2);
-  box-shadow:0 0 16px rgba(255,143,63,.35);
+.badge b{ color:var(--pink); }
+
+/* 타이머 */
+.timer{
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:12px;
+  margin:16px 0 16px;
+}
+.timebox{
+  border-radius:18px;
+  border:1px solid rgba(255,74,154,.18);
+  background:linear-gradient(180deg, rgba(255,74,154,.06), rgba(255,132,193,.05));
+  padding:16px 12px;
+  text-align:center;
+}
+.num{
+  font-size:28px;
+  font-weight:950;
+}
+.label{
+  margin-top:6px;
+  font-size:12px;
+  letter-spacing:.6px;
+  color:var(--mut);
 }
 
+/* 동의 */
+.row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:12px 0 14px;
+  font-size:14px;
+  color:rgba(18,19,24,.82);
+}
+.row input{ transform: translateY(1px); }
+
+/* 버튼 */
 button{
   width:100%;
-  padding:16px;
+  border:none;
   border-radius:18px;
-  border:1px solid rgba(255,143,63,.35);
+  padding:16px 16px;
+  font-weight:950;
   font-size:16px;
-  font-weight:1000;
   cursor:pointer;
-  color:#2b2620;
-
-  background:
-    radial-gradient(circle at 20% 20%, rgba(255,255,255,.55), transparent 45%),
-    linear-gradient(180deg, var(--main), var(--main2));
-
-  box-shadow:0 18px 45px rgba(255,143,63,.20);
-  transition: transform .15s ease, box-shadow .2s ease, filter .2s ease;
+  color:#fff;
+  background:linear-gradient(180deg, var(--pink), var(--pink2));
+  box-shadow:0 16px 40px rgba(255,74,154,.22);
+  transition:.18s;
 }
-
-button:hover{
-  transform:translateY(-2px);
-  filter:brightness(1.02);
-  box-shadow:0 24px 60px rgba(255,143,63,.24);
-}
-
-button:active{
-  transform:translateY(0);
-  filter:brightness(.98);
-}
-
+button:hover{ transform: translateY(-2px); }
 button:disabled{
   opacity:.55;
   cursor:not-allowed;
-  background:rgba(0,0,0,.06);
-  color:rgba(43,38,32,.55);
+  transform:none;
+  box-shadow:none;
 }
 
+/* 상태메시지 */
 .status{
   margin-top:12px;
+  border-radius:16px;
+  padding:12px 12px;
   font-size:13px;
-  color:var(--mut);
   line-height:1.45;
+  display:none;
 }
-.status strong{ color:var(--txt); }
-.status.ok strong{ color:#ff8f3f; }
-.status.already strong{ color:#c07a2c; }
-.status.fail strong{ color:#d64545; }
+.status strong{ font-weight:950; }
+
+.status.ok{
+  display:block;
+  background:rgba(20,184,122,.08);
+  border:1px solid rgba(20,184,122,.22);
+  color:rgba(18,19,24,.78);
+}
+.status.ok strong{ color:var(--ok); }
+
+.status.already{
+  display:block;
+  background:rgba(255,176,32,.10);
+  border:1px solid rgba(255,176,32,.22);
+  color:rgba(18,19,24,.78);
+}
+.status.already strong{ color:var(--warn); }
+
+.status.fail{
+  display:block;
+  background:rgba(255,59,59,.08);
+  border:1px solid rgba(255,59,59,.22);
+  color:rgba(18,19,24,.78);
+}
+.status.fail strong{ color:var(--bad); }
+
+.help{
+  margin-top:10px;
+  font-size:12px;
+  color:rgba(18,19,24,.55);
+}
+@media (max-width:620px){
+  .timer{ grid-template-columns: repeat(2, 1fr); }
+}
 </style>
 </head>
 
 <body>
-<div class="card">
-  <h1>RAON SERVER</h1>
+  <div class="card">
+    <div class="top">
+      <div>
+        <h1 class="title">RAON SERVER</h1>
+        <div class="sub">
+          2026년 3월 21일 오픈 예정<br>
+          많이 기대해주세요!!
+        </div>
+      </div>
 
-  <div class="sub">
-    2026년 3월 21일 오픈 예정<br />
-    많이 기대해주세요!!
+      <div class="badge">
+        사전예약 <b id="cnt">…</b>명
+      </div>
+    </div>
+
+    <div class="timer">
+      <div class="timebox">
+        <div class="num" id="d">0</div>
+        <div class="label">DAYS</div>
+      </div>
+      <div class="timebox">
+        <div class="num" id="h">00</div>
+        <div class="label">HOURS</div>
+      </div>
+      <div class="timebox">
+        <div class="num" id="m">00</div>
+        <div class="label">MIN</div>
+      </div>
+      <div class="timebox">
+        <div class="num" id="s">00</div>
+        <div class="label">SEC</div>
+      </div>
+    </div>
+
+    <div class="row">
+      <input type="checkbox" id="agree">
+      <label for="agree">서버 규칙 및 약관에 동의합니다.</label>
+    </div>
+
+    <button id="reserveBtn" disabled>사전예약 하기</button>
+    <div id="status" class="status"></div>
+    <div class="help">※ 디스코드 승인 후 자동으로 역할이 지급됩니다.</div>
   </div>
-
-  <!-- 사전예약 인원 표시 -->
-  <div class="people">
-    <div class="left">
-      <span class="badgeDot"></span>
-      <div class="title">사전예약 인원</div>
-    </div>
-    <div class="count">
-      <b id="peopleCount">--</b><span>명</span>
-    </div>
-  </div>
-
-  <div class="timer">
-    <div class="timebox">
-      <div class="num" id="d">0</div>
-      <div class="label">DAYS</div>
-    </div>
-    <div class="timebox">
-      <div class="num" id="h">00</div>
-      <div class="label">HOURS</div>
-    </div>
-    <div class="timebox">
-      <div class="num" id="m">00</div>
-      <div class="label">MIN</div>
-    </div>
-    <div class="timebox">
-      <div class="num" id="s">00</div>
-      <div class="label">SEC</div>
-    </div>
-  </div>
-
-  <div class="cta-badge">
-    <span class="cta-dot"></span>사전예약 진행
-  </div>
-
-  <div class="checkbox">
-    <input type="checkbox" id="agree" />
-    <label for="agree">서버 규칙 및 약관에 동의합니다.</label>
-  </div>
-
-  <button id="reserveBtn" disabled>사전예약 하기</button>
-  <div id="status" class="status"></div>
-</div>
 
 <script>
-// ===== 설정 =====
+/* ===== 설정 ===== */
 const OAUTH_START_URL = "https://raon-oauth-bot.onrender.com/auth/discord";
-const RESERVE_COUNT_API = "https://raon-oauth-bot.onrender.com/api/reserve-count";
+const COUNT_API_URL   = "https://raon-oauth-bot.onrender.com/api/reserve-count";
 
-// ===== 사전예약 인원 로딩 =====
-async function loadReserveCount(){
-  try{
-    const res = await fetch(RESERVE_COUNT_API);
-    const json = await res.json();
-    const n = Number(json?.count ?? json?.data ?? 0);
-    document.getElementById("peopleCount").innerText = isNaN(n)? "--" : n.toLocaleString();
-  }catch(e){
-    document.getElementById("peopleCount").innerText = "--";
-  }
-}
-// 처음 + 주기 갱신
-loadReserveCount();
-setInterval(loadReserveCount, 30000);
-
-// ===== 카운트다운 =====
+/* ===== 카운트다운 ===== */
 const target = new Date("2026-03-21T00:00:00+09:00").getTime();
+
 function updateTimer(){
-  const now = Date.now();
-  const diff = target - now;
+  const diff = target - Date.now();
+  const dEl = document.getElementById("d");
+  const hEl = document.getElementById("h");
+  const mEl = document.getElementById("m");
+  const sEl = document.getElementById("s");
+
   if(diff <= 0){
-    ["d","h","m","s"].forEach(id=>document.getElementById(id).innerText="00");
+    dEl.textContent = "0";
+    hEl.textContent = "00";
+    mEl.textContent = "00";
+    sEl.textContent = "00";
     return;
   }
-  const days = Math.floor(diff/(1000*60*60*24));
-  const hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
-  const minutes = Math.floor((diff%(1000*60*60))/(1000*60));
-  const seconds = Math.floor((diff%(1000*60))/1000);
 
-  document.getElementById("d").innerText = days;
-  document.getElementById("h").innerText = String(hours).padStart(2,"0");
-  document.getElementById("m").innerText = String(minutes).padStart(2,"0");
-  document.getElementById("s").innerText = String(seconds).padStart(2,"0");
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff % (1000*60*60*24))/(1000*60*60));
+  const minutes = Math.floor((diff % (1000*60*60))/(1000*60));
+  const seconds = Math.floor((diff % (1000*60))/1000);
+
+  dEl.textContent = String(days);
+  hEl.textContent = String(hours).padStart(2,'0');
+  mEl.textContent = String(minutes).padStart(2,'0');
+  sEl.textContent = String(seconds).padStart(2,'0');
 }
-setInterval(updateTimer,1000);
+setInterval(updateTimer, 1000);
 updateTimer();
 
-// ===== DOM & 버튼 =====
+/* ===== DOM ===== */
 const agree = document.getElementById("agree");
 const btn = document.getElementById("reserveBtn");
 const statusEl = document.getElementById("status");
+const cntEl = document.getElementById("cnt");
 
-agree.addEventListener("change",()=>{
-  if(btn.dataset.locked==="1")return;
+/* ===== 체크박스 ===== */
+agree.addEventListener("change", () => {
+  if (btn.dataset.locked === "1") return;
   btn.disabled = !agree.checked;
 });
 
-btn.addEventListener("click",()=> {
+/* ===== OAuth 시작 ===== */
+btn.addEventListener("click", () => {
   window.location.href = OAUTH_START_URL;
 });
 
-// ===== 결과 처리 =====
-(function(){
-  const p = new URLSearchParams(location.search);
-  const ok = p.get("ok");
-  const al = p.get("already");
-  const reason = p.get("reason");
+/* ===== 인원수 불러오기 ===== */
+async function refreshCount(){
+  try{
+    const r = await fetch(COUNT_API_URL, { cache:"no-store" });
+    const j = await r.json();
+    if (typeof j.count === "number") {
+      cntEl.textContent = j.count.toLocaleString("ko-KR");
+    }
+  }catch(e){
+    // CORS/네트워크 문제면 계속 … 로 남을 수 있음
+    // (이럴 때는 index.js에 CORS 추가가 필요)
+  }
+}
+refreshCount();
+setInterval(refreshCount, 8000);
 
-  if(al==="1"){
-    statusEl.className="status already";
-    statusEl.innerHTML="<strong>이미 사전예약됨</strong><br>디스코드 역할이 지급되어 있습니다.";
-    agree.checked=true;
-    btn.disabled=true;
-    btn.dataset.locked="1";
-    btn.innerText="이미 완료";
+/* ===== 결과 파라미터 처리 ===== */
+(function handleResult(){
+  const params = new URLSearchParams(window.location.search);
+  const ok = params.get("ok");
+  const already = params.get("already");
+  const reason = params.get("reason");
+
+  if (!ok && !already && !reason) return;
+
+  if (already === "1") {
+    statusEl.className = "status already";
+    statusEl.innerHTML = "<strong>이미 사전예약 완료됨</strong><br>디스코드에서 역할이 이미 지급되어 있습니다.";
+    agree.checked = true;
+    btn.disabled = true;
+    btn.dataset.locked = "1";
+    btn.textContent = "이미 사전예약 완료";
     return;
   }
-  if(ok==="1"){
-    statusEl.className="status ok";
-    statusEl.innerHTML="<strong>사전예약 완료!</strong><br>디스코드 역할이 지급되었습니다.";
-    agree.checked=true;
-    btn.disabled=true;
-    btn.dataset.locked="1";
-    btn.innerText="사전예약 완료";
+
+  if (ok === "1") {
+    statusEl.className = "status ok";
+    statusEl.innerHTML = "<strong>사전예약 완료!</strong><br>디스코드에서 역할이 지급되었습니다.";
+    agree.checked = true;
+    btn.disabled = true;
+    btn.dataset.locked = "1";
+    btn.textContent = "사전예약 완료";
+    refreshCount();
     return;
   }
-  if(reason==="not_in_guild"){
-    statusEl.className="status fail";
-    statusEl.innerHTML="<strong>먼저 서버에 입장해주세요</strong><br>디스코드 서버에 들어간 후 다시 시도하세요.";
-    btn.dataset.locked="0";
+
+  if (reason === "not_in_guild") {
+    statusEl.className = "status fail";
+    statusEl.innerHTML = "<strong>디스코드 서버에 먼저 들어와야 해요</strong><br>서버 입장 후 다시 시도해주세요.";
+    btn.dataset.locked = "0";
     btn.disabled = !agree.checked;
     return;
   }
-  if(ok==="0"){
-    statusEl.className="status fail";
-    statusEl.innerHTML="<strong>실패</strong><br>잠시 후 다시 시도해주세요.";
-    btn.dataset.locked="0";
+
+  if (ok === "0") {
+    statusEl.className = "status fail";
+    statusEl.innerHTML = "<strong>사전예약 실패</strong><br>잠시 후 다시 시도하거나 관리자에게 문의하세요.";
+    btn.dataset.locked = "0";
     btn.disabled = !agree.checked;
   }
 })();
