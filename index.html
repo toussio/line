@@ -15,10 +15,16 @@
   --main:#57F287;
 }
 
-*{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Pretendard","Noto Sans KR",Arial}
+*{
+  box-sizing:border-box;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,"Pretendard","Noto Sans KR",Arial
+}
+
 body{
   margin:0;
-  background:radial-gradient(circle at 20% 20%, rgba(87,242,135,.15), transparent 60%), var(--bg);
+  background:
+    radial-gradient(circle at 20% 20%, rgba(87,242,135,.15), transparent 60%),
+    var(--bg);
   color:var(--txt);
   display:flex;
   justify-content:center;
@@ -95,9 +101,16 @@ button{
   transition:.2s;
 }
 
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(87,242,135,.3);
+}
+
 button:disabled{
   opacity:.4;
   cursor:not-allowed;
+  transform:none;
+  box-shadow:none;
 }
 </style>
 </head>
@@ -105,6 +118,7 @@ button:disabled{
 
 <div class="card">
   <h1>RAON SERVER</h1>
+
   <div class="sub">
     2026년 3월 21일 오픈 예정<br>
     사전예약 시 디스코드 전용 역할 지급
@@ -138,11 +152,12 @@ button:disabled{
 </div>
 
 <script>
-// 카운트다운
+
+// ===== 카운트다운 =====
 const target = new Date("2026-03-21T00:00:00+09:00").getTime();
 
 function updateTimer(){
-  const now = new Date().getTime();
+  const now = Date.now();
   const diff = target - now;
 
   if(diff <= 0){
@@ -167,7 +182,8 @@ function updateTimer(){
 setInterval(updateTimer,1000);
 updateTimer();
 
-// 체크박스 활성화
+
+// ===== 체크박스 활성화 =====
 const agree = document.getElementById("agree");
 const btn = document.getElementById("reserveBtn");
 
@@ -175,17 +191,12 @@ agree.addEventListener("change",()=>{
   btn.disabled = !agree.checked;
 });
 
-// ✅ 버튼 클릭 -> 디스코드 OAuth 시작 URL로 이동 (정상 플로우)
+
+// ===== 디스코드 OAuth 시작 =====
 btn.addEventListener("click",()=>{
   window.location.href = "https://raon-oauth-bot.onrender.com/auth/discord";
 });
 
-/*
-⚠️ 요청대로 "callback"로 보내고 싶다면 (비권장)
-btn.addEventListener("click",()=>{
-  window.location.href = "https://raon-oauth-bot.onrender.com/auth/discord/callback";
-});
-*/
 </script>
 
 </body>
