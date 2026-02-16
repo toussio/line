@@ -7,12 +7,21 @@
 
 <style>
 :root{
-  --bg:#0b0f17;
-  --card:rgba(255,255,255,.05);
-  --line:rgba(255,255,255,.12);
-  --txt:#fff;
-  --mut:rgba(255,255,255,.65);
-  --main:#57F287;
+  --bg1:#fff5fb;
+  --bg2:#ffe7f5;
+  --card:#ffffff;
+  --line:rgba(255,105,180,.22);
+
+  --txt:#1b1b1f;
+  --mut:rgba(20,20,30,.62);
+
+  --main:#ff4fa3;   /* 메인 핑크 */
+  --main2:#ff86c6;  /* 연한 핑크 */
+  --ok:#18c37e;
+  --warn:#ffb020;
+  --bad:#ff4d4d;
+
+  --r:22px;
 }
 
 *{
@@ -23,118 +32,177 @@
 body{
   margin:0;
   background:
-    radial-gradient(circle at 20% 20%, rgba(87,242,135,.15), transparent 60%),
-    var(--bg);
+    radial-gradient(circle at 20% 18%, rgba(255,79,163,.22), transparent 55%),
+    radial-gradient(circle at 85% 30%, rgba(255,134,198,.22), transparent 55%),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
   color:var(--txt);
   display:flex;
   justify-content:center;
   align-items:center;
-  height:100vh;
-  padding:20px;
+  min-height:100vh;
+  padding:22px;
 }
 
 .card{
   width:100%;
-  max-width:600px;
+  max-width:640px;
   background:var(--card);
   border:1px solid var(--line);
-  border-radius:20px;
-  padding:30px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  border-radius:var(--r);
+  padding:28px;
+  box-shadow:0 22px 70px rgba(255,79,163,.16);
+}
+
+.header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+  margin-bottom:10px;
 }
 
 h1{
-  margin:0 0 10px;
-  font-size:28px;
+  margin:0;
+  font-size:30px;
+  letter-spacing:.2px;
 }
+
+.badge{
+  padding:10px 12px;
+  border-radius:999px;
+  border:1px solid rgba(255,79,163,.28);
+  background:linear-gradient(180deg, rgba(255,79,163,.12), rgba(255,134,198,.08));
+  font-weight:900;
+  font-size:13px;
+  white-space:nowrap;
+}
+
+.badge b{ color:var(--main); }
 
 .sub{
   color:var(--mut);
-  margin-bottom:20px;
+  margin:6px 0 18px;
+  line-height:1.5;
 }
 
 .timer{
   display:flex;
   justify-content:space-between;
   gap:10px;
-  margin-bottom:25px;
+  margin-bottom:18px;
 }
 
 .timebox{
   flex:1;
-  background:rgba(255,255,255,.04);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:15px;
+  background:linear-gradient(180deg, rgba(255,79,163,.08), rgba(255,134,198,.06));
+  border:1px solid rgba(255,79,163,.20);
+  border-radius:16px;
+  padding:14px 12px;
   text-align:center;
 }
 
 .num{
   font-size:26px;
-  font-weight:900;
+  font-weight:950;
+  color:#222;
 }
 
 .label{
   font-size:12px;
   color:var(--mut);
   margin-top:4px;
+  letter-spacing:.6px;
 }
 
 .checkbox{
   display:flex;
   gap:10px;
-  margin-bottom:20px;
+  margin-bottom:14px;
   font-size:14px;
+  color:#222;
 }
+
+.checkbox input{ transform: translateY(1px); }
 
 button{
   width:100%;
-  padding:15px;
-  border-radius:14px;
+  padding:15px 16px;
+  border-radius:16px;
   border:none;
   font-size:16px;
-  font-weight:900;
+  font-weight:950;
   cursor:pointer;
-  background:var(--main);
-  color:#000;
-  transition:.2s;
+  background:linear-gradient(180deg, var(--main), var(--main2));
+  color:#fff;
+  transition:.18s;
+  box-shadow:0 14px 34px rgba(255,79,163,.22);
 }
 
 button:hover{
   transform:translateY(-2px);
-  box-shadow:0 10px 30px rgba(87,242,135,.3);
 }
 
 button:disabled{
-  opacity:.4;
+  opacity:.5;
   cursor:not-allowed;
   transform:none;
   box-shadow:none;
 }
 
-/* ✅ 상태 메시지 */
+/* 상태 메시지 */
 .status{
   margin-top:12px;
   font-size:13px;
   color:var(--mut);
-  line-height:1.4;
+  line-height:1.45;
+  padding:12px 12px;
+  border-radius:14px;
+  border:1px solid rgba(0,0,0,.06);
+  background:rgba(0,0,0,.02);
 }
-.status strong{ color:#fff; }
 
-.status.ok strong{ color:#57F287; }
-.status.already strong{ color:#FFD166; }
-.status.fail strong{ color:#FF5C5C; }
+.status strong{ color:#111; }
+
+.status.ok{
+  border-color: rgba(24,195,126,.25);
+  background: rgba(24,195,126,.08);
+}
+.status.ok strong{ color:var(--ok); }
+
+.status.already{
+  border-color: rgba(255,176,32,.25);
+  background: rgba(255,176,32,.08);
+}
+.status.already strong{ color:var(--warn); }
+
+.status.fail{
+  border-color: rgba(255,77,77,.25);
+  background: rgba(255,77,77,.08);
+}
+.status.fail strong{ color:var(--bad); }
+
+.small{
+  margin-top:10px;
+  font-size:12px;
+  color:rgba(20,20,30,.50);
+}
 </style>
 </head>
 <body>
 
 <div class="card">
-  <h1>RAON SERVER</h1>
+  <div class="header">
+    <div>
+      <h1>RAON SERVER</h1>
+      <div class="sub">
+        2026년 3월 21일 오픈 예정<br>
+        많이 기대해주세요!!
+      </div>
+    </div>
 
-  <div class="sub">
-    2026년 3월 21일 오픈 예정<br>
-    많이 기대해주세요!!
+    <div class="badge">
+      사전예약 <b id="cnt">-</b>명
+    </div>
   </div>
 
   <div class="timer">
@@ -162,12 +230,14 @@ button:disabled{
   </div>
 
   <button id="reserveBtn" disabled>사전예약 하기</button>
-  <div id="status" class="status"></div>
+  <div id="status" class="status" style="display:none;"></div>
+  <div class="small">※ 디스코드 승인 후 자동으로 역할이 지급됩니다.</div>
 </div>
 
 <script>
 // ===== 설정 =====
 const OAUTH_START_URL = "https://raon-oauth-bot.onrender.com/auth/discord";
+const COUNT_API_URL   = "https://raon-oauth-bot.onrender.com/api/reserve-count";
 
 // ===== 카운트다운 =====
 const target = new Date("2026-03-21T00:00:00+09:00").getTime();
@@ -194,7 +264,6 @@ function updateTimer(){
   document.getElementById("m").innerText = String(minutes).padStart(2,'0');
   document.getElementById("s").innerText = String(seconds).padStart(2,'0');
 }
-
 setInterval(updateTimer,1000);
 updateTimer();
 
@@ -202,30 +271,42 @@ updateTimer();
 const agree = document.getElementById("agree");
 const btn = document.getElementById("reserveBtn");
 const statusEl = document.getElementById("status");
+const cntEl = document.getElementById("cnt");
 
-// ===== 체크박스 활성화 =====
+// ===== 체크박스 =====
 agree.addEventListener("change",()=>{
-  // 결과 상태로 버튼이 잠겨있으면(완료/이미완료) 다시 풀지 않음
   if (btn.dataset.locked === "1") return;
   btn.disabled = !agree.checked;
 });
 
-// ===== 디스코드 OAuth 시작 =====
+// ===== OAuth 시작 =====
 btn.addEventListener("click",()=>{
   window.location.href = OAUTH_START_URL;
 });
 
+// ===== 사전예약 인원 불러오기 =====
+async function refreshCount(){
+  try{
+    const r = await fetch(COUNT_API_URL, { cache: "no-store" });
+    const j = await r.json();
+    if (typeof j.count === "number") cntEl.textContent = String(j.count);
+  }catch{
+    // 네트워크 에러면 그냥 유지
+  }
+}
+refreshCount();
+setInterval(refreshCount, 10000);
+
 // ===== 결과 파라미터 처리 =====
-// 봇에서 redirect 시:
-// ?ok=1            => 사전예약 완료
-// ?already=1       => 이미 완료
-// ?ok=0            => 실패
-// ?reason=not_in_guild => 서버 미입장
 (function handleResult(){
   const params = new URLSearchParams(window.location.search);
   const ok = params.get("ok");
   const already = params.get("already");
   const reason = params.get("reason");
+
+  if (!ok && !already && !reason) return;
+
+  statusEl.style.display = "block";
 
   if (already === "1") {
     statusEl.className = "status already";
@@ -244,13 +325,14 @@ btn.addEventListener("click",()=>{
     btn.disabled = true;
     btn.dataset.locked = "1";
     btn.innerText = "사전예약 완료";
+    // 성공했으면 카운트 바로 갱신
+    refreshCount();
     return;
   }
 
   if (reason === "not_in_guild") {
     statusEl.className = "status fail";
     statusEl.innerHTML = "<strong>서버에 먼저 들어와야 해요</strong><br>디스코드 서버에 입장 후 다시 시도하세요.";
-    // 실패이므로 다시 시도 가능
     btn.dataset.locked = "0";
     btn.disabled = !agree.checked;
     return;
@@ -267,4 +349,3 @@ btn.addEventListener("click",()=>{
 
 </body>
 </html>
-
